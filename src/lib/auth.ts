@@ -15,5 +15,25 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true
+  },
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        defaultValue: "student",
+      },
+      location: {
+        type: "string",
+        required: false,
+      },
+      coverPhoto: {
+        type: "string",
+        required: false,
+      },
+      phoneNumber: {
+        type: "string",
+        required: false,
+      }
+    }
   }
 });

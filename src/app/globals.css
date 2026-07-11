@@ -4,9 +4,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-primary: #4F46E5; /* Indigo */
-  --color-secondary: #E11D48; /* Rose */
-  --color-tertiary: #0D9488; /* Teal */
+  --color-primary: #0066ff; /* Electric Blue */
+  --color-secondary: #00d8ff; /* Cyan-Blue */
+  --color-tertiary: #06b6d4; /* Cyan */
   
   --color-surface: var(--surface);
   --color-surface-hover: var(--surface-hover);
@@ -16,21 +16,11 @@
 }
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --surface: #ffffff;
-  --surface-hover: #f1f5f9;
-  --border: #e2e8f0;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0f172a;
-    --foreground: #f8fafc;
-    --surface: #1e293b;
-    --surface-hover: #334155;
-    --border: #334155;
-  }
+  --background: #08090c; /* Unified premium dark grey-black */
+  --foreground: #f8fafc;
+  --surface: transparent;    /* Completely transparent surfaces */
+  --surface-hover: rgba(255, 255, 255, 0.05);
+  --border: transparent;      /* No borders */
 }
 
 body {
@@ -38,6 +28,50 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Global reset for structural borders & backgrounds */
+.border,
+.border-b,
+.border-t,
+.border-r,
+.border-l,
+.border-white\/5,
+.border-white\/10,
+.bg-slate-950\/65,
+.bg-slate-950\/40,
+.bg-slate-950\/30,
+.bg-slate-950,
+.bg-slate-900\/60,
+.bg-slate-900,
+.bg-white\/\[0\.02\],
+.bg-white\/\[0\.01\],
+.bg-white\/5,
+.bg-slate-900\/60,
+.backdrop-blur-2xl,
+.backdrop-blur-xl,
+.backdrop-blur-md,
+.bg-surface {
+  border-color: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Keep interactive/glowing borders */
+.border-purple-500,
+.border-indigo-500,
+.border-purple-600,
+.focus-within\:border-purple-500\/50:focus-within,
+.focus-within\:border-purple-500:focus-within {
+  border-color: #0066ff !important;
+}
+.border-indigo-600,
+.border-blue-500,
+.border-blue-600,
+.border-cyan-500,
+.border-cyan-600 {
+  border-color: #00d8ff !important;
 }
 
 /* Base resets */

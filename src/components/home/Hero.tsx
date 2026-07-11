@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Play, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Play, ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const BANNERS = [
   {
@@ -42,73 +43,88 @@ export default function Hero() {
     setCurrentSlide((prev) => (prev - 1 + BANNERS.length) % BANNERS.length);
   };
 
+  const scrollToCourses = () => {
+    const section = document.getElementById("courses-section");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <section className="relative overflow-hidden bg-background pt-12 pb-16 md:pt-20 md:pb-24">
+    <section className="relative overflow-hidden bg-background min-h-[60vh] lg:h-[70vh] lg:min-h-[520px] lg:max-h-[630px] flex items-center py-10 lg:py-0">
       {/* Background decoration */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 h-96 w-96 rounded-full bg-[var(--color-primary)] opacity-10 blur-3xl" />
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 h-80 w-80 rounded-full bg-[var(--color-secondary)] opacity-10 blur-3xl" />
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 h-96 w-96 rounded-full bg-[var(--color-primary)] opacity-5 blur-3xl" />
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 h-80 w-80 rounded-full bg-[var(--color-secondary)] opacity-5 blur-3xl" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           
           {/* Left Text Content */}
-          <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)]/20 bg-[var(--color-primary)]/5 px-3 py-1 mb-6 text-sm font-medium text-[var(--color-primary)]">
-              <span className="flex h-2 w-2 rounded-full bg-[var(--color-primary)]" />
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/5 px-3 py-1 mb-4 text-xs font-semibold text-blue-400">
+              <span className="flex h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" />
               Empowering your learning journey
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6 leading-[1.1]">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 leading-[1.1] text-white">
               Master New Skills with <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">
                 Expert-Led Courses
               </span>
             </h1>
             
-            <p className="text-lg md:text-xl text-foreground/70 mb-8 leading-relaxed">
+            <p className="text-xs md:text-sm text-slate-400 mb-6 leading-relaxed">
               Join thousands of students worldwide. Learn programming, design, business, and more from industry professionals at your own pace.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
               <Link
                 href="/courses"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-primary)] px-8 py-4 text-base font-semibold text-white hover:bg-[var(--color-primary)]/90 transition-all hover:scale-105 shadow-lg shadow-[var(--color-primary)]/30"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 px-6 py-3 text-sm font-bold text-white shadow-[0_0_15px_rgba(0,102,255,0.3)] hover:scale-[1.03] active:scale-[0.97] transition-all cursor-pointer"
               >
                 Explore Courses
-                <ArrowRight className="h-5 w-5" />
+                <ArrowRight className="h-4 w-4" />
               </Link>
               
-              <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border-2 border-border bg-surface px-8 py-4 text-base font-semibold hover:bg-surface-hover hover:border-border transition-all">
-                <Play className="h-5 w-5 text-[var(--color-primary)]" />
+              <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 px-6 py-3 text-sm font-bold text-white hover:scale-[1.03] active:scale-[0.97] transition-all cursor-pointer">
+                <Play className="h-4 w-4 text-blue-400 fill-current" />
                 Watch Demo
               </button>
             </div>
             
             {/* Social Proof */}
-            <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 text-foreground/60">
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-foreground text-2xl">4.9</span>
-                <div className="flex text-amber-500">
-                  {"★★★★★"}
-                </div>
-                <span className="text-sm">10k+ reviews</span>
+            <div className="mt-8 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 text-slate-400">
+              <div className="flex items-center gap-1.5">
+                <span className="font-extrabold text-white text-xl">4.9</span>
+                <span className="text-amber-500 text-sm">★★★★★</span>
+                <span className="text-xs">10k+ reviews</span>
               </div>
-              <div className="hidden sm:block h-8 w-px bg-border" />
-              <div className="flex items-center gap-4">
-                <div className="flex -space-x-3">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="h-10 w-10 rounded-full border-2 border-surface bg-border" />
-                  ))}
+              <div className="hidden sm:block h-6 w-px bg-white/10" />
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-2">
+                  <div className="h-7 w-7 rounded-full border border-slate-900 bg-slate-800 flex items-center justify-center text-[8px] font-bold text-white">JD</div>
+                  <div className="h-7 w-7 rounded-full border border-slate-900 bg-blue-800 flex items-center justify-center text-[8px] font-bold text-white">MK</div>
+                  <div className="h-7 w-7 rounded-full border border-slate-900 bg-emerald-800 flex items-center justify-center text-[8px] font-bold text-white">SL</div>
                 </div>
-                <p className="text-sm">Join <span className="font-bold text-foreground">50k+</span> students</p>
+                <p className="text-xs">Join <span className="font-bold text-white">50k+</span> active students</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Slider */}
-          <div className="relative h-[400px] md:h-[500px] lg:h-[600px] w-full rounded-3xl overflow-hidden shadow-2xl group border-4 border-surface/50 backdrop-blur-sm">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="relative h-[240px] sm:h-[280px] lg:h-[350px] w-full rounded-2xl overflow-hidden shadow-2xl group border border-white/10"
+          >
             {BANNERS.map((banner, index) => (
               <div
                 key={banner.id}
@@ -124,44 +140,54 @@ export default function Hero() {
                   className="object-cover"
                   priority={index === 0}
                 />
-                {/* Gradient overlay for better contrast if needed later */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
               </div>
             ))}
 
             {/* Slider Controls */}
-            <div className="absolute bottom-6 right-6 z-20 flex gap-3">
+            <div className="absolute bottom-4 right-4 z-20 flex gap-2">
               <button
                 onClick={prevSlide}
-                className="h-10 w-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/40 transition-colors"
+                className="h-8 w-8 rounded-xl bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/60 transition-colors cursor-pointer"
               >
-                <ChevronLeft className="h-6 w-6" />
+                <ChevronLeft className="h-4 w-4" />
               </button>
               <button
                 onClick={nextSlide}
-                className="h-10 w-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/40 transition-colors"
+                className="h-8 w-8 rounded-xl bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/60 transition-colors cursor-pointer"
               >
-                <ChevronRight className="h-6 w-6" />
+                <ChevronRight className="h-4 w-4" />
               </button>
             </div>
 
             {/* Slider Indicators */}
-            <div className="absolute bottom-8 left-0 right-0 z-20 flex justify-center gap-2">
+            <div className="absolute bottom-5 left-0 right-0 z-20 flex justify-center gap-1.5">
               {BANNERS.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
                   className={cn(
-                    "h-2 rounded-full transition-all duration-300",
-                    index === currentSlide ? "w-8 bg-white" : "w-2 bg-white/50"
+                    "h-1 rounded-full transition-all duration-300 cursor-pointer",
+                    index === currentSlide ? "w-6 bg-white" : "w-1.5 bg-white/50"
                   )}
                   aria-label={`Go to slide ${index + 1}`}
                 />
               ))}
             </div>
-          </div>
+          </motion.div>
 
         </div>
+      </div>
+
+      {/* Down Scroll flow indicator */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-1">
+        <button 
+          onClick={scrollToCourses}
+          className="text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:text-white transition-colors flex flex-col items-center gap-1 animate-bounce cursor-pointer"
+        >
+          <span>Explore Courses</span>
+          <ChevronDown className="h-4 w-4" />
+        </button>
       </div>
     </section>
   );

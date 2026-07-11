@@ -29,6 +29,18 @@ const UserSchema = new mongoose.Schema(
       type: String,
       enum: ['student', 'instructor', 'admin'],
       default: 'student',
+    },
+    location: {
+      type: String,
+      default: '',
+    },
+    coverPhoto: {
+      type: String,
+      default: '',
+    },
+    phoneNumber: {
+      type: String,
+      default: '',
     }
   },
   { timestamps: true }

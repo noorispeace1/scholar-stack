@@ -10,9 +10,9 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <FeaturedCourses />
       <HowItWorksSection />
       <CategoriesSection />
-      <FeaturedCourses />
       <StatsSection />
       <TestimonialsSection />
       <NewsletterSection />

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { authClient } from "@/lib/auth-client";
-import { AlertCircle, Mail, Lock, User, Loader2, ArrowRight } from "lucide-react";
+import { AlertCircle, Mail, Lock, User, Loader2, ArrowRight, Briefcase } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -14,7 +14,8 @@ const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  confirmPassword: z.string()
+  confirmPassword: z.string(),
+  role: z.enum(["student", "instructor"])
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -30,10 +31,17 @@ export default function RegisterForm() {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
+    defaultValues: {
+      role: "student",
+    }
   });
+
+  const selectedRole = watch("role");
 
   const onSubmit = async (data: RegisterFormValues) => {
     setError(null);
@@ -42,7 +50,8 @@ export default function RegisterForm() {
         email: data.email,
         password: data.password,
         name: data.name,
-      });
+        role: data.role
+      } as any);
 
       if (signUpError) {
         setError(signUpError.message || "Failed to sign up.");
@@ -94,6 +103,40 @@ export default function RegisterForm() {
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {/* Join As Role selection */}
+        <div className="space-y-2 mb-4">
+          <label className="block text-xs font-semibold text-purple-300/80 uppercase tracking-wider">
+            Join As
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => setValue("role", "student")}
+              className={`flex flex-col items-center justify-center gap-2 rounded-xl py-3 border text-sm font-semibold transition-all hover:scale-[1.02] cursor-pointer ${
+                selectedRole === "student"
+                  ? "border-purple-500 bg-purple-500/10 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]"
+                  : "border-white/10 bg-slate-900/60 hover:bg-slate-900/80 text-slate-400 hover:text-slate-300"
+              }`}
+            >
+              <User className="h-5 w-5" />
+              <span>Student</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setValue("role", "instructor")}
+              className={`flex flex-col items-center justify-center gap-2 rounded-xl py-3 border text-sm font-semibold transition-all hover:scale-[1.02] cursor-pointer ${
+                selectedRole === "instructor"
+                  ? "border-indigo-500 bg-indigo-500/10 text-indigo-400 shadow-[0_0_15px_rgba(99,102,241,0.2)]"
+                  : "border-white/10 bg-slate-900/60 hover:bg-slate-900/80 text-slate-400 hover:text-slate-300"
+              }`}
+            >
+              <Briefcase className="h-5 w-5" />
+              <span>Course Teacher</span>
+            </button>
+          </div>
+          {errors.role && <p className="text-red-400 text-xs ml-1">{errors.role.message}</p>}
+        </div>
+
         <div className="space-y-1">
           <div className={`relative group rounded-xl border bg-slate-900/60 transition-all duration-200 ${errors.name ? 'border-red-500/30 group-hover:border-red-500/50 focus-within:border-red-500' : 'border-white/10 focus-within:border-purple-500/50 focus-within:bg-slate-950/60'}`}>
             <User className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 group-focus-within:text-pink-400 transition-colors h-5 w-5" />
