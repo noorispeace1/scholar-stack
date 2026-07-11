@@ -25,158 +25,7 @@ import {
   Share2,
 } from "lucide-react";
 
-// Fallback data for mock IDs
-const MOCK_COURSES: Record<string, any> = {
-  mock1: {
-    _id: "mock1",
-    title: "Complete Web Development Bootcamp 2026",
-    instructor: "Dr. Angela Yu",
-    instructorTitle: "Senior Developer & Lead Instructor",
-    instructorAvatar: "https://i.pravatar.cc/150?img=47",
-    instructorBio:
-      "Dr. Angela Yu is a developer and lead instructor at the London App Brewery. With over 10 years of teaching experience, she has helped hundreds of thousands of students break into tech.",
-    description:
-      "Learn web development by building 100 projects in 100 days. Covers HTML, CSS, Javascript, React, Node, and more.",
-    fullDescription:
-      "This is the most comprehensive and beginner-friendly web development course on the internet! Whether you want to become a professional developer, launch your own startup, or just want to learn to code, this course is your ultimate guide. We'll cover everything from basic HTML to advanced React and Node.js, giving you all the tools you need to build real-world, production-ready web applications.",
-    price: 89.99,
-    originalPrice: 199.99,
-    category: "Development",
-    image:
-      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop",
-    rating: 4.8,
-    reviewCount: 4523,
-    duration: "65 hours",
-    studentsCount: 125000,
-    lastUpdated: "July 2026",
-    language: "English",
-    level: "Beginner to Advanced",
-    certificate: true,
-    lectures: 385,
-    articles: 42,
-    downloadable: 23,
-    whatYouLearn: [
-      "Build 16 web development projects for your portfolio",
-      "Master HTML5, CSS3, Flexbox & Grid",
-      "JavaScript ES6, DOM manipulation & APIs",
-      "React, Hooks, Context API & Redux",
-      "Node.js, Express & RESTful APIs",
-      "MongoDB & SQL database management",
-      "Authentication with JWT & OAuth",
-      "Deploy full-stack apps to the cloud",
-    ],
-    requirements: [
-      "No programming experience needed — we'll start from scratch",
-      "A computer with internet access",
-      "Basic computer literacy",
-    ],
-    curriculum: [
-      { section: "Web Development Fundamentals", lectures: 22, duration: "8h 30m" },
-      { section: "Advanced CSS & Flexbox", lectures: 18, duration: "5h 45m" },
-      { section: "JavaScript Deep Dive", lectures: 60, duration: "14h 20m" },
-      { section: "React & Modern Frontend", lectures: 75, duration: "18h 10m" },
-      { section: "Node.js & Backend Development", lectures: 55, duration: "12h 05m" },
-      { section: "Databases & Authentication", lectures: 40, duration: "8h 50m" },
-      { section: "Deployment & DevOps", lectures: 15, duration: "4h 00m" },
-    ],
-  },
-  mock2: {
-    _id: "mock2",
-    title: "Advanced UI/UX Design Masterclass",
-    instructor: "Gary Simon",
-    instructorTitle: "UI/UX Designer & YouTuber",
-    instructorAvatar: "https://i.pravatar.cc/150?img=12",
-    instructorBio:
-      "Gary Simon is a professional UI/UX designer with over 15 years of experience working with Fortune 500 companies. He has taught design to over 500,000 students worldwide.",
-    description:
-      "Master Figma, user research, wireframing, and prototyping. Build a portfolio that gets you hired.",
-    fullDescription:
-      "This masterclass covers everything you need to go from zero to a professional UI/UX designer. You'll learn industry-standard tools like Figma, master design principles, and build an impressive portfolio that gets you hired at top tech companies.",
-    price: 69.99,
-    originalPrice: 149.99,
-    category: "Design",
-    image:
-      "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=1200&auto=format&fit=crop",
-    rating: 4.9,
-    reviewCount: 2150,
-    duration: "24 hours",
-    studentsCount: 45000,
-    lastUpdated: "June 2026",
-    language: "English",
-    level: "Intermediate",
-    certificate: true,
-    lectures: 145,
-    articles: 18,
-    downloadable: 35,
-    whatYouLearn: [
-      "Design beautiful, user-friendly interfaces in Figma",
-      "Conduct user research and usability testing",
-      "Create professional wireframes and prototypes",
-      "Master typography, color theory and visual hierarchy",
-      "Build a portfolio of 5+ real-world projects",
-      "Design for accessibility and inclusivity",
-    ],
-    requirements: [
-      "Basic computer skills",
-      "No prior design experience needed",
-      "A free Figma account",
-    ],
-    curriculum: [
-      { section: "Design Fundamentals", lectures: 20, duration: "3h 15m" },
-      { section: "Figma Mastery", lectures: 35, duration: "6h 30m" },
-      { section: "User Research", lectures: 18, duration: "3h 20m" },
-      { section: "Wireframing & Prototyping", lectures: 30, duration: "5h 45m" },
-      { section: "Portfolio Projects", lectures: 42, duration: "8h 10m" },
-    ],
-  },
-};
 
-// Generate fallback for other mock IDs
-for (let i = 3; i <= 8; i++) {
-  const id = `mock${i}`;
-  const fallbackData: Record<string, any> = {
-    mock3: { title: "Data Science and Machine Learning", instructor: "Jose Portilla", category: "Data Science", price: 94.99, originalPrice: 199.99, image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop", rating: 4.7, reviewCount: 8900, duration: "42 hours", studentsCount: 210000 },
-    mock4: { title: "Digital Marketing Complete Course", instructor: "Seth Godin", category: "Business", price: 54.99, originalPrice: 129.99, image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=1200&auto=format&fit=crop", rating: 4.6, reviewCount: 3200, duration: "18 hours", studentsCount: 85000 },
-    mock5: { title: "Next.js 15 Premium Course", instructor: "Hitesh Choudhary", category: "Development", price: 79.99, originalPrice: 169.99, image: "https://images.unsplash.com/photo-1618401471353-b98aedd07871?q=80&w=1200&auto=format&fit=crop", rating: 4.8, reviewCount: 1540, duration: "30 hours", studentsCount: 28000 },
-    mock6: { title: "Graphic Design Masterclass", instructor: "Lindsay Marsh", category: "Design", price: 49.99, originalPrice: 109.99, image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1200&auto=format&fit=crop", rating: 4.7, reviewCount: 950, duration: "28 hours", studentsCount: 12000 },
-    mock7: { title: "Python for Artificial Intelligence", instructor: "Andrej Karpathy", category: "Data Science", price: 119.99, originalPrice: 249.99, image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop", rating: 4.9, reviewCount: 18900, duration: "55 hours", studentsCount: 95000 },
-    mock8: { title: "Financial Analysis & Modeling", instructor: "Bill Gates", category: "Business", price: 64.99, originalPrice: 139.99, image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=1200&auto=format&fit=crop", rating: 4.5, reviewCount: 1100, duration: "20 hours", studentsCount: 9800 },
-  };
-  if (fallbackData[id]) {
-    MOCK_COURSES[id] = {
-      _id: id,
-      instructorTitle: "Expert Instructor",
-      instructorAvatar: `https://i.pravatar.cc/150?img=${i * 7}`,
-      instructorBio: `${fallbackData[id].instructor} is an expert in ${fallbackData[id].category} with years of industry experience, helping students achieve real-world results.`,
-      description: "A comprehensive, hands-on course designed to take you from beginner to professional level.",
-      fullDescription: "This course is packed with practical exercises, real-world projects, and expert-led instruction. You'll gain the skills employers are actively looking for and build a portfolio that showcases your capabilities.",
-      lastUpdated: "July 2026",
-      language: "English",
-      level: "All Levels",
-      certificate: true,
-      lectures: Math.floor(Math.random() * 150) + 80,
-      articles: Math.floor(Math.random() * 30) + 10,
-      downloadable: Math.floor(Math.random() * 30) + 10,
-      whatYouLearn: [
-        "Master core concepts from beginner to advanced",
-        "Build real-world projects for your portfolio",
-        "Understand industry best practices",
-        "Gain hands-on experience with practical exercises",
-        "Learn from an industry expert with years of experience",
-        "Get lifetime access and regular course updates",
-      ],
-      requirements: ["Basic computer literacy", "Enthusiasm to learn", "Internet connection"],
-      curriculum: [
-        { section: "Getting Started", lectures: 12, duration: "2h 00m" },
-        { section: "Core Concepts", lectures: 35, duration: "7h 30m" },
-        { section: "Advanced Topics", lectures: 48, duration: "10h 45m" },
-        { section: "Real-World Projects", lectures: 30, duration: "8h 00m" },
-        { section: "Certification Prep", lectures: 15, duration: "3h 30m" },
-      ],
-      ...fallbackData[id],
-    };
-  }
-}
 
 const REVIEWS = [
   { name: "Alex Johnson", avatar: "https://i.pravatar.cc/150?img=33", rating: 5, date: "2 weeks ago", comment: "Absolutely phenomenal course! The instructor explains everything so clearly. I went from zero coding knowledge to building full-stack apps in just a few months." },
@@ -234,13 +83,9 @@ export default function CourseDetailsPage() {
             ],
             ...data,
           });
-        } else if (MOCK_COURSES[courseId]) {
-          setCourse(MOCK_COURSES[courseId]);
         }
       } catch {
-        if (MOCK_COURSES[courseId]) {
-          setCourse(MOCK_COURSES[courseId]);
-        }
+        console.error("Failed to fetch course details");
       } finally {
         setIsLoading(false);
       }

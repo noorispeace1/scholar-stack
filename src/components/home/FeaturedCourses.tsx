@@ -7,112 +7,7 @@ import { ArrowRight, Search, SlidersHorizontal, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Mock data fallback if database fetch returns empty
-const FALLBACK_COURSES = [
-  {
-    _id: "mock1",
-    title: "Complete Web Development Bootcamp 2026",
-    instructor: "Dr. Angela Yu",
-    description: "Learn web development by building 100 projects in 100 days. Covers HTML, CSS, Javascript, React, Node, and more.",
-    price: 89.99,
-    category: "Development",
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=600&auto=format&fit=crop",
-    rating: 4.8,
-    reviewCount: 4523,
-    duration: "65 hours",
-    studentsCount: 125000
-  },
-  {
-    _id: "mock2",
-    title: "Advanced UI/UX Design Masterclass",
-    instructor: "Gary Simon",
-    description: "Master Figma, user research, wireframing, and prototyping. Build a portfolio that gets you hired.",
-    price: 69.99,
-    category: "Design",
-    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=600&auto=format&fit=crop",
-    rating: 4.9,
-    reviewCount: 2150,
-    duration: "24 hours",
-    studentsCount: 45000
-  },
-  {
-    _id: "mock3",
-    title: "Data Science and Machine Learning",
-    instructor: "Jose Portilla",
-    description: "Learn Python, Pandas, NumPy, Scikit-Learn, and TensorFlow to build real-world AI applications.",
-    price: 94.99,
-    category: "Data Science",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop",
-    rating: 4.7,
-    reviewCount: 8900,
-    duration: "42 hours",
-    studentsCount: 210000
-  },
-  {
-    _id: "mock4",
-    title: "Digital Marketing Complete Course",
-    instructor: "Seth Godin",
-    description: "SEO, Social Media Marketing, Copywriting, Email Marketing, and Analytics in one comprehensive bundle.",
-    price: 54.99,
-    category: "Business",
-    image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=600&auto=format&fit=crop",
-    rating: 4.6,
-    reviewCount: 3200,
-    duration: "18 hours",
-    studentsCount: 85000
-  },
-  {
-    _id: "mock5",
-    title: "Next.js 15 Premium Course",
-    instructor: "Hitesh Choudhary",
-    description: "Learn Next.js 15 App Router, Server Actions, Server Components, Route Handlers, and Authentication.",
-    price: 79.99,
-    category: "Development",
-    image: "https://images.unsplash.com/photo-1618401471353-b98aedd07871?q=80&w=600&auto=format&fit=crop",
-    rating: 4.8,
-    reviewCount: 1540,
-    duration: "30 hours",
-    studentsCount: 28000
-  },
-  {
-    _id: "mock6",
-    title: "Graphic Design Masterclass",
-    instructor: "Lindsay Marsh",
-    description: "Learn Photoshop, Illustrator, and InDesign. Discover graphic design theory, branding, and logo design.",
-    price: 49.99,
-    category: "Design",
-    image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop",
-    rating: 4.7,
-    reviewCount: 950,
-    duration: "28 hours",
-    studentsCount: 12000
-  },
-  {
-    _id: "mock7",
-    title: "Python for Artificial Intelligence",
-    instructor: "Andrej Karpathy",
-    description: "Deep dive into neural networks, PyTorch, backpropagation, and build your own GPT from scratch.",
-    price: 119.99,
-    category: "Data Science",
-    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=600&auto=format&fit=crop",
-    rating: 4.9,
-    reviewCount: 18900,
-    duration: "55 hours",
-    studentsCount: 95000
-  },
-  {
-    _id: "mock8",
-    title: "Financial Analysis & Modeling",
-    instructor: "Bill Gates",
-    description: "Learn Excel, accounting, financial statements, forecasting, and investment analysis with case studies.",
-    price: 64.99,
-    category: "Business",
-    image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=600&auto=format&fit=crop",
-    rating: 4.5,
-    reviewCount: 1100,
-    duration: "20 hours",
-    studentsCount: 9800
-  }
-];
+
 
 export default function FeaturedCourses() {
   const [courses, setCourses] = useState<any[]>([]);
@@ -126,13 +21,13 @@ export default function FeaturedCourses() {
         const res = await fetch("/api/courses");
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
+        if (Array.isArray(data)) {
           setCourses(data);
         } else {
-          setCourses(FALLBACK_COURSES);
+          setCourses([]);
         }
       } catch {
-        setCourses(FALLBACK_COURSES);
+        setCourses([]);
       } finally {
         setIsLoading(false);
       }
