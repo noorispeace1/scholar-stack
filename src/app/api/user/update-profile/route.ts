@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     const { name, image, role, location, coverPhoto, phoneNumber } = await req.json();
 
     // Call the backend Express server on port 5000 to update the user profile
-    const backendRes = await fetch("http://localhost:5000/users/update-profile", {
+    const backendRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/update-profile`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

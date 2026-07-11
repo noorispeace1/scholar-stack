@@ -117,6 +117,14 @@ export default function CoursesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 4;
+
+  // Reset to first page when search or category changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedCategory]);
 
   useEffect(() => {
     async function fetchCourses() {
@@ -152,6 +160,12 @@ export default function CoursesPage() {
 
     return matchesSearch && matchesCategory;
   });
+
+  const totalPages = Math.ceil(filteredCourses.length / ITEMS_PER_PAGE);
+  const paginatedCourses = filteredCourses.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   return (
     <div className="min-h-screen bg-[#070814] text-white pt-24 pb-20 relative overflow-hidden">
@@ -223,25 +237,62 @@ export default function CoursesPage() {
             <p className="text-slate-400 text-sm">Fetching catalog from server...</p>
           </div>
         ) : filteredCourses.length > 0 ? (
-          <motion.div
-            layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredCourses.map((course, idx) => (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3 }}
-                  key={`${course._id || course.id || 'course'}-${idx}`}
+          <>
+            <motion.div
+              layout
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+            >
+              <AnimatePresence mode="popLayout">
+                {paginatedCourses.map((course, idx) => (
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
+                    key={`${course._id || course.id || 'course'}-${idx}`}
+                  >
+                    <CourseCard {...course} />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex justify-center mt-12 gap-2 relative z-10">
+                <button
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 rounded-xl bg-slate-900/80 backdrop-blur-sm border border-white/10 hover:bg-slate-800 hover:border-purple-500/30 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm font-medium"
                 >
-                  <CourseCard {...course} />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+                  Previous
+                </button>
+                
+                {Array.from({ length: totalPages }).map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center border text-sm font-bold transition-all duration-300 ${
+                      currentPage === i + 1 
+                        ? "bg-gradient-to-tr from-purple-600 to-indigo-600 border-purple-500/50 text-white shadow-[0_0_15px_rgba(168,85,247,0.4)] scale-110" 
+                        : "bg-slate-900/80 backdrop-blur-sm border-white/10 text-slate-400 hover:bg-slate-800 hover:border-purple-500/30 hover:text-slate-300"
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+
+                <button
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 rounded-xl bg-slate-900/80 backdrop-blur-sm border border-white/10 hover:bg-slate-800 hover:border-purple-500/30 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm font-medium"
+                >
+                  Next
+                </button>
+              </div>
+            )}
+          </>
         ) : (
           <div className="text-center py-28 border border-white/5 rounded-3xl bg-slate-950/20">
             <p className="text-slate-500 text-sm">No courses matching your search criteria were found.</p>

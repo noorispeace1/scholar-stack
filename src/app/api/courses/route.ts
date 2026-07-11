@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const res = await fetch("http://localhost:5000/courses");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses`);
     if (!res.ok) return NextResponse.json([], { status: 200 });
     const data = await res.json();
     return NextResponse.json(data);
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
 
     const { title, description, category, price, image } = await req.json();
 
-    const backendRes = await fetch("http://localhost:5000/courses/add", {
+    const backendRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
